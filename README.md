@@ -10,8 +10,9 @@ URL запроса:
 
 ```json
 {
-    "method": "GetMethod",
-    "code": 200
+    "method": "default_user",
+    "code": "default_password",
+    "date": "14-06-2024 14:56:19"
 }
 ```
 
@@ -36,5 +37,13 @@ URL запроса:
     "login": "user",
     "password": "1234",
     "date": "13-06-2024 14:39:15"
+}
+```
+
+При неверных данных в запросе, возвращается ошибка ```404```. Пример ответа:
+```json
+{
+    "msg": "Bad request",
+    "code": 400
 }
 ```
