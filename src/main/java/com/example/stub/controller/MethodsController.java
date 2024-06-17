@@ -17,20 +17,6 @@ import java.util.Objects;
 @RequestMapping("/api")
 public class MethodsController {
 
-//    @PostMapping("/post")
-//    public ResponseEntity<?> post(@RequestBody User request) {
-//        String login = request.getLogin();
-//        String password = request.getPassword();
-//        System.out.println(login);
-//
-//        if (login == null || password == null) {
-//            ErrorResponse response = new ErrorResponse("Bad request", 400);
-//            return ResponseEntity.status(400).body(response);
-//        } else {
-//            User response = new User(login, password);
-//            return ResponseEntity.status(201).body(response);
-//        }
-//    }
 
     @PostMapping("/post")
     public ResponseEntity<?> post(@RequestBody String payload) throws JsonProcessingException {

@@ -1,5 +1,13 @@
 # Заглушка на Java
 
+## Запуск
+
+```shell
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-javaagent:jolokia-agent-jvm-2.0.3-javaagent.jar=port=7777,host=localhost"
+```
+
+## Описание
+
 **Метод GET**
 
 URL запроса:
