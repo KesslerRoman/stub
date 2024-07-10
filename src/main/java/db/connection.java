@@ -10,7 +10,7 @@ public class connection {
     public final static String db_user = "admin";
     public final static String db_password = "admin";
 
-    public static User select(String condition) {
+    public static User select(String condition) throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -18,34 +18,32 @@ public class connection {
         }
 
         final String query = "SELECT public.user.login, public.email.email, public.user.password, public.user.date\n" +
-                             "FROM public.user\n" +
-                             "JOIN public.email\n" +
-                             "ON public.user.login = public.email.login\n" +
-                             "WHERE public.user.login = '" + condition + "';";
+                "FROM public.user\n" +
+                "JOIN public.email\n" +
+                "ON public.user.login = public.email.login\n" +
+                "WHERE public.user.login = '" + condition + "';";
+
+        Connection db = null;
+        Statement st = null;
+        ResultSet rs = null;
 
         try {
-            Connection db = DriverManager.getConnection(db_url, db_user, db_password);
-            Statement st = db.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            db = DriverManager.getConnection(db_url, db_user, db_password);
+            st = db.createStatement();
+            rs = st.executeQuery(query);
 
             if (rs.next()) {
-                System.out.println(rs.getString(1) + "|" + rs.getString(2) + "|" + rs.getString(3));
-
-                User user = new User(rs.getString(1), rs.getString(2), rs.getString(3));
-                System.out.println(user.getDate());
-
-                rs.close();
-                st.close();
-                db.close();
-                return user;
+                return new User(rs.getString(1), rs.getString(2), rs.getString(3));
+            } else {
+                throw new SQLException("No such user: " + condition);
             }
-            else
-                return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } finally {
+            if (rs != null) rs.close();
+            if (st != null) st.close();
+            if (db != null) db.close();
         }
-        return null;
     }
+
 
     public static int insert(User user) {
 
